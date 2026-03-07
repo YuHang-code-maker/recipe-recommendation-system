@@ -2,8 +2,6 @@ package com.tus.RRS.dto;
 
 import java.util.Set;
 
-
-
 public class RecipeDto {
 	private Long id;
 
