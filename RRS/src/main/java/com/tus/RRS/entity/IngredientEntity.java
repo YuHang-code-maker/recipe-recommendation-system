@@ -30,6 +30,7 @@ public class IngredientEntity {
 	public IngredientEntity(String name) {
 		this.name = name;
 	}
+	
 
 	public Long getId() {
 		return id;
