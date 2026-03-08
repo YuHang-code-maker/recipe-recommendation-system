@@ -7,5 +7,5 @@ import com.tus.RRS.entity.RecipeEntity;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity,Long>{
-
+	boolean existsByTitle(String title);
 }
