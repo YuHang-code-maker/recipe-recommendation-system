@@ -12,6 +12,7 @@ public class RecipeMapper {
 	public static RecipeDto mapToRecipeDto(RecipeEntity recipe, RecipeDto recipeDto) {
 		recipeDto.setId(recipe.getId());
 		recipeDto.setTitle(recipe.getTitle());
+		recipeDto.setInstructions(recipe.getInstructions());
 		recipeDto.setImage(recipe.getImage());
 		Set<IngredientDto> ingredientDto = recipe.getIngredients().stream()
 				.map(ingredient ->
@@ -20,13 +21,15 @@ public class RecipeMapper {
 	                   ingredient.getName()
 	               ))
 	          .collect(Collectors.toSet());
+		recipeDto.setIngredients(ingredientDto);
 		return recipeDto;
 	}
 	
-	public static RecipeEntity mapToRecipeDtoEntity(RecipeDto recipeDto, RecipeEntity recipe) {
+	public static RecipeEntity mapToRecipeEntity(RecipeDto recipeDto, RecipeEntity recipe) {
 		recipe.setId(recipeDto.getId());
 		recipe.setTitle(recipeDto.getTitle());
 		recipe.setImage(recipeDto.getImage());
+		recipe.setInstructions(recipeDto.getInstructions());
 		Set<IngredientEntity> ingredients= recipeDto.getIngredients().stream()
 											.map(i->{
 											    IngredientEntity ingredient = new IngredientEntity();
@@ -34,6 +37,7 @@ public class RecipeMapper {
 											    ingredient.setName(i.getName());
 											    return ingredient;
 											}).collect(Collectors.toSet());
+		recipe.setIngredients(ingredients);
 		return recipe;
 	}
 }
