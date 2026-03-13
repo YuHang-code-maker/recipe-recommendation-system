@@ -1,7 +1,11 @@
 package com.tus.RRS.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class IngredientDto {
 	private Long id;
+	
+	@NotBlank(message="Ingredient name cannot be empty")
 	private String name;
 	public IngredientDto() {
 		
