@@ -1,5 +1,7 @@
 package com.tus.RRS.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -85,6 +87,18 @@ public class RecipeServiceImpl implements IRecipeService{
 		);
 		recipeRepository.deleteById(id);
 		return true;
+	}
+	@Override
+	public List<RecipeDto> getAllRecipes() {
+		List<RecipeEntity> recipes = recipeRepository.findAll();
+		List<RecipeDto> recipeDtos = new ArrayList<>();
+
+		for(RecipeEntity recipe : recipes){
+		    recipeDtos.add(
+		        RecipeMapper.mapToRecipeDto(recipe, new RecipeDto())
+		    );
+		}
+		return recipeDtos;
 	}
 
 }

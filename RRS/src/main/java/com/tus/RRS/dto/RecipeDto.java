@@ -2,15 +2,20 @@ package com.tus.RRS.dto;
 
 import java.util.Set;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 public class RecipeDto {
 	private Long id;
 
+	@NotBlank(message="Title cannot be empty")
     private String title;
 
     private String instructions;
 
     private String image;
     
+    @NotEmpty(message="Recipe must contain at least one ingredient")
     Set<IngredientDto> ingredients;
 
 	public RecipeDto() {

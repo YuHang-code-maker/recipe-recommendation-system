@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Website</title>
+
+    <link rel="stylesheet" href="css/bootstrapV4.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="page">
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" href="#">Recipe World</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#recipeSection">Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#searchSection">Search</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container text-center">
+            <h1 class="display-4 font-weight-bold">Simple & Delicious Recipes</h1>
+            <p class="lead mt-3">
+                Discover easy recipes, fresh ingredients, and tasty ideas for every day.
+            </p>
+            <a href="#recipeSection" class="btn btn-warning btn-lg mt-3">Explore Recipes</a>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="searchSection" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title text-center mb-4">
+                <h2>Find Your Recipe</h2>
+                <p class="text-muted">Search by recipe title</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="search-box p-4 shadow-sm rounded bg-white">
+                        <div class="form-row align-items-center">
+                            <div class="col-md-9 mb-2 mb-md-0">
+                                <input type="text" id="searchInput" class="form-control form-control-lg"
+                                       placeholder="Enter recipe title...">
+                            </div>
+                            <div class="col-md-3">
+                                <button id="searchBtn" class="btn btn-dark btn-lg btn-block">Search</button>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="showAllBtn" class="btn btn-outline-secondary">Show All Recipes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Section -->
+    <section id="recipeSection" class="py-5">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2>Popular Recipes</h2>
+                <p class="text-muted">A quick collection of tasty recipes</p>
+            </div>
+
+            <div id="recipeList" class="row">
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Details Modal -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="recipeModalLabel">Recipe Details</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center mb-3 mb-md-0">
+                            <img id="modalImage" src="/images/1.jpg" class="img-fluid rounded" alt="Recipe image">
+                        </div>
+                        <div class="col-md-7">
+                            <h3 id="modalTitle">Tomato Pasta</h3>
+                            <h5 class="mt-3">Instructions</h5>
+                            <p id="modalInstructions" class="text-muted">
+                                Recipe instructions will appear here.
+                            </p>
+
+                            <h5 class="mt-3">Ingredients</h5>
+                            <ul id="modalIngredients" class="pl-3">
+                                <li>Pasta</li>
+                                <li>Tomato</li>
+                                <li>Olive Oil</li>
+                                <li>Salt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">© 2026 Recipe World. All rights reserved.</p>
+        </div>
+    </footer>
+
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrapV4.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
