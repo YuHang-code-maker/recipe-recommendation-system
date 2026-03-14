@@ -1,5 +1,6 @@
 package com.tus.RRS.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity,Long>{
 	boolean existsByTitle(String title);
 	
 	Optional<RecipeEntity> findByTitle(String title);
+	
+	List<RecipeEntity> findByTitleContainingIgnoreCase(String title);
 }

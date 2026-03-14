@@ -46,12 +46,7 @@ public class RecipeServiceImpl implements IRecipeService{
 		recipe.setIngredients(ingredients);
 		recipeRepository.save(recipe);
 	}
-	@Override
-	public RecipeDto fetchRecipe(String title) {
-		RecipeEntity recipe = recipeRepository.findByTitle(title).orElseThrow(
-				()->new ResourceNotFoundException("Recipe","title",title));
-		return RecipeMapper.mapToRecipeDto(recipe, new RecipeDto());
-	}
+	
 	@Override
 	public boolean updateRecipe(Long id,RecipeDto recipeDto) {
 		if (recipeDto == null || id == null) {
@@ -83,8 +78,7 @@ public class RecipeServiceImpl implements IRecipeService{
 	@Override
 	public boolean deleteRecipe(Long id) {
 		RecipeEntity recipe = recipeRepository.findById(id).orElseThrow(
-			()-> new ResourceNotFoundException("Recipe","id",id.toString())
-		);
+			()-> new ResourceNotFoundException("Recipe","id",id.toString()));
 		recipeRepository.deleteById(id);
 		return true;
 	}
@@ -100,5 +94,22 @@ public class RecipeServiceImpl implements IRecipeService{
 		}
 		return recipeDtos;
 	}
+	@Override
+	public RecipeDto getRecipeById(Long id) {
+		RecipeEntity recipe = recipeRepository.findById(id).orElseThrow(
+				()-> new ResourceNotFoundException("Recipe","id",id.toString()));
+		return RecipeMapper.mapToRecipeDto(recipe, new RecipeDto());
+	}
+	@Override
+	public List<RecipeDto> searchRecipesByTitle(String title) {
+		List<RecipeEntity> recipes = recipeRepository.findByTitleContainingIgnoreCase(title);
+		List<RecipeDto> recipeDtos = new ArrayList<>();
 
+		for(RecipeEntity recipe : recipes){
+		    recipeDtos.add(
+		        RecipeMapper.mapToRecipeDto(recipe, new RecipeDto())
+		    );
+		}
+		return recipeDtos;
+	}
 }
