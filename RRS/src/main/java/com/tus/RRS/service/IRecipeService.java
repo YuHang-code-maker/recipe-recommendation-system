@@ -6,8 +6,9 @@ import com.tus.RRS.dto.RecipeDto;
 
 public interface IRecipeService {
 	void createRecipe(RecipeDto recipeDto);
-	RecipeDto fetchRecipe(String title);
+	List<RecipeDto> searchRecipesByTitle(String title);
 	boolean updateRecipe(Long id,RecipeDto recipeDto);
 	boolean deleteRecipe(Long id);
 	List<RecipeDto> getAllRecipes();
+	RecipeDto getRecipeById(Long id);
 }

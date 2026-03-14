@@ -19,3 +19,22 @@ INSERT INTO ingredients (id, name) VALUES
 (10, 'Butter'),
 (11, 'Lettuce');
 
+INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES
+(1, 2),
+(1, 3),
+(1, 8),
+(1, 9),
+(2, 1),
+(2, 8),
+(2, 9),
+(3, 4),
+(3, 5),
+(3, 10),
+(4, 6),
+(4, 11),
+(4, 8),
+(4, 9),
+(5, 1),
+(5, 7),
+(5, 8),
+(5, 9);

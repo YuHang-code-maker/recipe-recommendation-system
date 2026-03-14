@@ -28,28 +28,28 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 @RestController
-@RequestMapping(path="/api", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/api/recipes", produces=MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class RecipeController {
 	@Autowired
 	private IRecipeService iRecipeService;
 	
-	@PostMapping("/recipe")
+	@PostMapping
 	public ResponseEntity<ResponseDto> createRecipe(@Valid @RequestBody RecipeDto recipeDto){
 		iRecipeService.createRecipe(recipeDto);
 		return ResponseEntity.status(HttpStatus.CREATED)
 							.body(new ResponseDto(RecipeConstants.STATUS_201,RecipeConstants.MESSAGE_201));
 	}
 	
-	@GetMapping("/recipe")
-	public ResponseEntity<RecipeDto> fetchRecipeDetails(@RequestParam
+	@GetMapping("/search")
+	public ResponseEntity<List<RecipeDto>> searchRecipeByTitle(@RequestParam
 			@NotBlank(message="Title cannot be empty")
 			String title){
-		RecipeDto recipeDto = iRecipeService.fetchRecipe(title);
+		List<RecipeDto> recipeDto = iRecipeService.searchRecipesByTitle(title);
 		return ResponseEntity.status(HttpStatus.OK).body(recipeDto);
 	}
 	
-	@PutMapping("/recipe/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<ResponseDto> updateRecipeDetails(@PathVariable 
 			@Positive(message = "Id must be greater than 0")
 			Long id,@Valid @RequestBody RecipeDto recipeDto){
@@ -61,7 +61,7 @@ public class RecipeController {
 		}
 	}
 	
-	@DeleteMapping("/recipe/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponseDto> deleteRecipeDetails(@PathVariable @Positive(message = "Id must be greater than 0") Long id){
 		boolean isDeleted = iRecipeService.deleteRecipe(id);
 		if(isDeleted) {
@@ -71,9 +71,15 @@ public class RecipeController {
 		}
 	}
 	
-	@GetMapping("/recipes")
+	@GetMapping
 	public ResponseEntity<List<RecipeDto>> getAllRecipes(){
 		List<RecipeDto> recipes = iRecipeService.getAllRecipes();
 		return ResponseEntity.status(HttpStatus.OK).body(recipes);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<RecipeDto> getRecipeById(@PathVariable @Positive(message = "Id must be greater than 0") Long id){
+		RecipeDto recipeDto = iRecipeService.getRecipeById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(recipeDto);
 	}
 }
