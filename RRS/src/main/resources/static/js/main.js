@@ -3,10 +3,14 @@
 	'use strict';
 	const ROOT_URL = 'http://localhost:8085/api/recipes';
 	const findAll = ()=>{
+		const token = localStorage.getItem('token');
 		$.ajax({
 			type:'GET',
 			url: ROOT_URL,
 			dataType: 'json',
+			headers: {
+			    Authorization: `Bearer ${token}`
+			},
 			success:renderList
 		});
 	};
@@ -69,6 +73,31 @@
 		});
 	};
 	
+	const login = ()=>{
+		$.ajax({
+		        type: 'POST',
+		        url: 'http://localhost:8085/auth/login',
+		        contentType: 'application/json',
+		        data: JSON.stringify({
+		            username: $('#username').val(),
+		            password: $('#password').val()
+		        }),
+		        success: function(response) {
+		            localStorage.setItem('token', response.token);
+		            window.location.href = 'index.html';
+		        },
+		        error: function() {
+		            alert('Login failed');
+		        }
+		    });
+	};
+	
+	const logout = ()=>{
+		localStorage.removeItem('token');
+		localStorage.removeItem('role');
+		window.location.href = 'login.html';
+	}
+	
 	$(()=>{
 		$(document).on("click",".infoButton",function(){
 		    const id = $(this).data("id");
@@ -88,6 +117,14 @@
 			findAll();
 		});
 		
+		$('#loginBtn').on('click', function(e) {
+		    e.preventDefault();
+		    login();
+		});
+		
+		$('#logoutBtn').on('click',function() {
+		    logout();
+		});
 		findAll();
 	})
 	
