@@ -18,17 +18,20 @@ public class RecipeDto {
     @NotEmpty(message="Recipe must contain at least one ingredient")
     Set<IngredientDto> ingredients;
     
+    private String externalLink;
+    
     private int matchCount;
 
 	public RecipeDto() {
 	}
 
-	public RecipeDto(Long id, String title, String instructions, String image, Set<IngredientDto> ingredients) {
+	public RecipeDto(Long id, String title, String instructions, String image, Set<IngredientDto> ingredients,String externalLink) {
 		this.id = id;
 		this.title = title;
 		this.instructions = instructions;
 		this.image = image;
 		this.ingredients = ingredients;
+		this.externalLink = externalLink;
 	}
 	public Long getId() {
 		return id;
@@ -79,5 +82,14 @@ public class RecipeDto {
     public void setMatchCount(int matchCount) {
         this.matchCount = matchCount;
     }
+
+	public String getExternalLink() {
+		return externalLink;
+	}
+
+	public void setExternalLink(String externalLink) {
+		this.externalLink = externalLink;
+	}
+
     
 }
