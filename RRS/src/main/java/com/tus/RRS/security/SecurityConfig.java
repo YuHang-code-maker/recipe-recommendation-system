@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/",
                     "/index.html",
+                    "/login.html",
                     "/auth/**",
                     "/css/**",
                     "/js/**",
