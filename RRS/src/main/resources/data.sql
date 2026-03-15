@@ -38,3 +38,12 @@ INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES
 (5, 7),
 (5, 8),
 (5, 9);
+
+INSERT INTO roles (id, name) VALUES (1, 'admin');
+INSERT INTO roles (id, name) VALUES (2, 'customer');
+
+INSERT INTO users (id, username, password, role_id)
+VALUES (1, 'admin', '$2a$10$qHyE342Ge4tTjntZa0zmoeclDvzKCfV2StOxfq/nUSy61hEsG09xa', 1);
+
+INSERT INTO users (id, username, password, role_id)
+VALUES (2, 'customer', '$2a$10$859ce95cptve0YMfySgbl.6hWWAfHyj9kMFXXVO76mKuS8qXJzBQq', 2);
