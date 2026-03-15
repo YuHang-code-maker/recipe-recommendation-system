@@ -1,6 +1,7 @@
 package com.tus.RRS.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -111,5 +112,37 @@ public class RecipeServiceImpl implements IRecipeService{
 		    );
 		}
 		return recipeDtos;
+	}
+	@Override
+	public List<RecipeDto> searchByIngredients(String ingredients) {
+		List<String> selectedIngredients = Arrays.asList(ingredients.split(","));
+	    List<RecipeEntity> allRecipes = recipeRepository.findAll();
+	    List<RecipeDto> result = new ArrayList<>();
+	    for (RecipeEntity recipe : allRecipes) {
+	        int matchCount = 0;
+	        for (IngredientEntity ingredient : recipe.getIngredients()) {
+	            for (String selected : selectedIngredients) {
+	                if (ingredient.getName().equalsIgnoreCase(selected.trim())) {
+	                    matchCount++;
+	                }
+	            }
+	        }
+	        if (matchCount > 0) {
+	        	RecipeDto dto = RecipeMapper.mapToRecipeDto(recipe, new RecipeDto());
+	            dto.setMatchCount(matchCount);
+	            result.add(dto);
+	        }
+	    }
+	    
+	    for (int i = 0; i < result.size() - 1; i++) {
+	        for (int j = i + 1; j < result.size(); j++) {
+	            if (result.get(j).getMatchCount() > result.get(i).getMatchCount()) {
+	                RecipeDto temp = result.get(i);
+	                result.set(i, result.get(j));
+	                result.set(j, temp);
+	            }
+	        }
+	    }
+	    return result;
 	}
 }

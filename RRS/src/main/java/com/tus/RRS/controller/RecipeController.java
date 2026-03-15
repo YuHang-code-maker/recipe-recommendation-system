@@ -82,4 +82,9 @@ public class RecipeController {
 		RecipeDto recipeDto = iRecipeService.getRecipeById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(recipeDto);
 	}
+	
+	@GetMapping("/searchByIngredients")
+	public ResponseEntity<List<RecipeDto>> searchByIngredients(@RequestParam @NotBlank(message="Ingredients cannot be empty") String ingredients) {
+	    return ResponseEntity.ok(iRecipeService.searchByIngredients(ingredients));
+	}
 }

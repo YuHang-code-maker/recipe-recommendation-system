@@ -302,6 +302,28 @@
 			        }
 			    });
 			};
+			
+			const findByIngredients = (ingredientsInput) => {
+			    const token = localStorage.getItem('token');
+
+			    $.ajax({
+			        type: 'GET',
+			        url: `${ROOT_URL}/searchByIngredients?ingredients=${encodeURIComponent(ingredientsInput)}`,
+			        dataType: 'json',
+			        headers: {
+			            Authorization: `Bearer ${token}`
+			        },
+			        success: renderList,
+			        error: function(xhr) {
+			            console.log('findByIngredients failed:', xhr.status, xhr.responseText);
+			            let message = 'Failed to search recipes by ingredients.';
+			            if (xhr.responseJSON && xhr.responseJSON.errorMessage) {
+			                message = xhr.responseJSON.errorMessage;
+			            }
+			            alert(message);
+			        }
+			    });
+			};
 	
 	$(()=>{
 		$(document).on("click",".infoButton",function(){
@@ -387,6 +409,18 @@
 		    });
 		}
 		
+		if ($('#searchBtnIngredient').length) {
+		    $('#searchBtnIngredient').on('click', () => {
+		        const ingredientsInput = $('#searchInputIngredient').val().trim();
+
+		        if (!ingredientsInput) {
+		            alert('Please enter at least one ingredient.');
+		            return;
+		        }
+
+		        findByIngredients(ingredientsInput);
+		    });
+		}
 
 		initApp();
 	})

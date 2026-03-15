@@ -17,6 +17,8 @@ public class RecipeDto {
     
     @NotEmpty(message="Recipe must contain at least one ingredient")
     Set<IngredientDto> ingredients;
+    
+    private int matchCount;
 
 	public RecipeDto() {
 	}
@@ -70,5 +72,12 @@ public class RecipeDto {
 		this.ingredients = ingredients;
 	}
     
+	public int getMatchCount() {
+        return matchCount;
+    }
+
+    public void setMatchCount(int matchCount) {
+        this.matchCount = matchCount;
+    }
     
 }
