@@ -6,13 +6,13 @@
 	let currentRecipe = null;
 	
 	const showLoginView = () => {
-	    $('#loginView').show();
-	    $('#appView').hide();
+		$('#loginView').removeClass('d-none');
+		    $('#appView').addClass('d-none');
 	};
 
 	const showAppView = () => {
-	    $('#loginView').hide();
-	    $('#appView').show();
+		$('#loginView').addClass('d-none');
+		$('#appView').removeClass('d-none');
 	};
 	
 	const initApp = () => {
@@ -87,6 +87,15 @@
 		$('#modalImage').attr('src',`/images/${recipe.image}`);
 		$('#modalInstructions').text(recipe.instructions);
 		$('#modalIngredients').empty();
+		if (recipe.externalLink) {
+		    $('#modalExternalLink')
+		        .attr('href', recipe.externalLink)
+		        .show();
+		} else {
+		    $('#modalExternalLink')
+		        .hide()
+		        .attr('href', '#');
+		}
 		let html = ``;
 		recipe.ingredients.forEach(ing=>{
 		        html += `<li>${ing.name}</li>`;
@@ -159,6 +168,7 @@
 	    const image = $('#recipeImage').val().trim();
 	    const instructions = $('#recipeInstructions').val().trim();
 	    const ingredientsInput = $('#recipeIngredients').val().trim();
+		const externalLink = $('#recipeExternalLink').val().trim();
 
 	    if (!title || !image || !instructions || !ingredientsInput) {
 	        $('#addRecipeError').text('All fields are required.').show();
@@ -175,6 +185,7 @@
 	        title: title,
 	        image: image,
 	        instructions: instructions,
+			externalLink: externalLink,
 	        ingredients: ingredients
 	    };
 
@@ -187,9 +198,12 @@
 	        },
 	        data: JSON.stringify(recipeData),
 	        success: function() {
-	            $('#addRecipeModal').modal('hide');
-	            $('#addRecipeForm')[0].reset();
-	            findAll();
+				$('#addRecipeModal').modal('hide');
+				$('#addRecipeForm')[0].reset();
+
+				currentRecipeId = null;
+				currentRecipe = null;
+				findAll();
 	        },
 	        error: function(xhr) {
 	            console.log('addRecipe failed:', xhr.status, xhr.responseText);
@@ -239,6 +253,7 @@
 			    $('#recipeTitle').val(recipe.title);
 			    $('#recipeImage').val(recipe.image);
 			    $('#recipeInstructions').val(recipe.instructions);
+				$('#recipeExternalLink').val(recipe.externalLink || '');
 
 			    const ingredients = recipe.ingredients.map(i => i.name).join(', ');
 			    $('#recipeIngredients').val(ingredients);
@@ -256,6 +271,7 @@
 			    const image = $('#recipeImage').val().trim();
 			    const instructions = $('#recipeInstructions').val().trim();
 			    const ingredientsInput = $('#recipeIngredients').val().trim();
+				const externalLink = $('#recipeExternalLink').val().trim();
 
 			    const ingredients = ingredientsInput
 			        .split(',')
@@ -268,6 +284,7 @@
 			        title,
 			        image,
 			        instructions,
+					externalLink,
 			        ingredients
 			    };
 
@@ -364,9 +381,13 @@
 		
 		if ($('#addBtn').length) {
 		    $('#addBtn').on('click', function() {
-		        $('#addRecipeForm')[0].reset();
-		        $('#addRecipeError').hide().text('');
-		        $('#addRecipeModal').modal('show');
+				currentRecipeId = null;
+				currentRecipe = null;
+
+				$('#addRecipeForm')[0].reset();
+				$('#addRecipeError').hide().text('');
+				$('#addRecipeModalLabel').text("Add New Recipe");
+				$('#addRecipeModal').modal('show');
 		    });
 		}
 		

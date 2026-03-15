@@ -45,6 +45,7 @@ public class RecipeServiceImpl implements IRecipeService{
 				}).collect(Collectors.toSet());
 		
 		recipe.setIngredients(ingredients);
+		recipe.setExternalLink(recipeDto.getExternalLink());
 		recipeRepository.save(recipe);
 	}
 	
@@ -72,7 +73,7 @@ public class RecipeServiceImpl implements IRecipeService{
 	            .collect(Collectors.toSet());
 
 	    recipe.setIngredients(ingredients);
-
+	    recipe.setExternalLink(recipeDto.getExternalLink());
 	    recipeRepository.save(recipe);
 	    return true;
 	}

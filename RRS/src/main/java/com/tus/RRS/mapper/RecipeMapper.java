@@ -22,6 +22,7 @@ public class RecipeMapper {
 	               ))
 	          .collect(Collectors.toSet());
 		recipeDto.setIngredients(ingredientDto);
+		recipeDto.setExternalLink(recipe.getExternalLink());
 		return recipeDto;
 	}
 	
@@ -38,6 +39,7 @@ public class RecipeMapper {
 											    return ingredient;
 											}).collect(Collectors.toSet());
 		recipe.setIngredients(ingredients);
+		recipe.setExternalLink(recipeDto.getExternalLink());
 		return recipe;
 	}
 }

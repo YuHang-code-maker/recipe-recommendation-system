@@ -25,13 +25,17 @@ public class RecipeEntity {
     @JoinTable(name = "recipe_ingredients",joinColumns = @JoinColumn(name = "recipe_id"),
     	    inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<IngredientEntity> ingredients = new HashSet<>();
+    
+    @Column(length = 500)
+    private String externalLink;
    
 	public RecipeEntity() {}
 
-	public RecipeEntity( String title, String instructions, String image) {
+	public RecipeEntity( String title, String instructions, String image,String externalLink) {
 		this.title = title;
 		this.instructions = instructions;
 		this.image = image;
+		this.externalLink = externalLink;
 	}
 
 	public Long getId() {
@@ -72,6 +76,14 @@ public class RecipeEntity {
 
 	public void setIngredients(Set<IngredientEntity> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public String getExternalLink() {
+		return externalLink;
+	}
+
+	public void setExternalLink(String externalLink) {
+		this.externalLink = externalLink;
 	}
     
 }
