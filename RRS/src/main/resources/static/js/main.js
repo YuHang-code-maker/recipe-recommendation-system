@@ -5,6 +5,28 @@
 	let currentRecipeId = null;
 	let currentRecipe = null;
 	
+	const showLoginView = () => {
+	    $('#loginView').show();
+	    $('#appView').hide();
+	};
+
+	const showAppView = () => {
+	    $('#loginView').hide();
+	    $('#appView').show();
+	};
+	
+	const initApp = () => {
+	    const token = localStorage.getItem('token');
+
+	    if (token) {
+	        showAppView();
+	        applyRolePermissions();
+	        findAll();
+	    } else {
+	        showLoginView();
+	    }
+	};
+	
 	const findAll = ()=>{
 		const token = localStorage.getItem('token');
 		$.ajax({
@@ -102,7 +124,9 @@
 					if (response.role) {
 					    localStorage.setItem('role', response.role);
 					}
-					window.location.href = 'index.html';
+					showAppView();
+					applyRolePermissions();
+					findAll();
 		        },
 		        error: function() {
 		            alert('Login failed');
@@ -123,7 +147,9 @@
 	const logout = ()=>{
 		localStorage.removeItem('token');
 		localStorage.removeItem('role');
-		window.location.href = 'login.html';
+		showLoginView();
+
+		$('#loginForm')[0].reset();
 	};
 	
 	const addRecipe = () => {
@@ -362,10 +388,7 @@
 		}
 		
 
-		if ($('#recipeList').length) {
-			  applyRolePermissions();
-			  findAll();
-		}
+		initApp();
 	})
 	
 	
