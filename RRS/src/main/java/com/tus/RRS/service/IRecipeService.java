@@ -11,4 +11,5 @@ public interface IRecipeService {
 	boolean deleteRecipe(Long id);
 	List<RecipeDto> getAllRecipes();
 	RecipeDto getRecipeById(Long id);
+	List<RecipeDto> searchByIngredients(String ingredients);
 }
