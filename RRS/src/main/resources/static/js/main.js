@@ -4,10 +4,11 @@
 	
 	let currentRecipeId = null;
 	let currentRecipe = null;
+	let recipeChart = null;
 	
 	const showLoginView = () => {
 		$('#loginView').removeClass('d-none');
-		    $('#appView').addClass('d-none');
+		$('#appView').addClass('d-none');
 	};
 
 	const showAppView = () => {
@@ -18,13 +19,11 @@
 	const initApp = () => {
 	    const token = localStorage.getItem('token');
 
-	    if (token) {
-	        showAppView();
-	        applyRolePermissions();
-	        findAll();
-	    } else {
-	        showLoginView();
-	    }
+		if (token) {
+		     findAll();
+		} else {
+		     showLoginView();
+		}
 	};
 	
 	const findAll = ()=>{
@@ -36,7 +35,21 @@
 			headers: {
 			    Authorization: `Bearer ${token}`
 			},
-			success:renderList
+			success: function(recipes) {
+				const currentToken = localStorage.getItem('token');
+				if (!currentToken) return;
+			            showAppView();
+			            applyRolePermissions();
+			            renderList(recipes);
+			 },
+			 error: function(xhr) {
+			       if (xhr.status === 401) {
+			                alert('Please log in again.');
+			                logout();
+			        } else {
+			                alert('Failed to load recipes.');
+			        }
+			 }
 		});
 	};
 	
@@ -156,9 +169,19 @@
 	const logout = ()=>{
 		localStorage.removeItem('token');
 		localStorage.removeItem('role');
-		showLoginView();
+		
+		currentRecipeId = null;
+		currentRecipe = null;
 
-		$('#loginForm')[0].reset();
+		$('#recipeList').empty();
+		$('#searchInput').val('');
+		$('#searchInputIngredient').val('');
+		document.getElementById('loginForm').reset();
+
+		$('#recipeModal').modal('hide');
+		$('#addRecipeModal').modal('hide');
+
+		showLoginView();
 	};
 	
 	const addRecipe = () => {
@@ -197,9 +220,10 @@
 	            Authorization: `Bearer ${token}`
 	        },
 	        data: JSON.stringify(recipeData),
-	        success: function() {
+	        success: () =>{
 				$('#addRecipeModal').modal('hide');
-				$('#addRecipeForm')[0].reset();
+				document.getElementById('addRecipeForm').reset();
+				
 
 				currentRecipeId = null;
 				currentRecipe = null;
@@ -247,54 +271,49 @@
 	};
 	
 	const openEditModal = (recipe) => {
+		currentRecipeId = recipe.id;
 
-			    currentRecipeId = recipe.id;
+		$('#recipeTitle').val(recipe.title);
+		$('#recipeImage').val(recipe.image);
+		$('#recipeInstructions').val(recipe.instructions);
+		$('#recipeExternalLink').val(recipe.externalLink || '');
 
-			    $('#recipeTitle').val(recipe.title);
-			    $('#recipeImage').val(recipe.image);
-			    $('#recipeInstructions').val(recipe.instructions);
-				$('#recipeExternalLink').val(recipe.externalLink || '');
-
-			    const ingredients = recipe.ingredients.map(i => i.name).join(', ');
-			    $('#recipeIngredients').val(ingredients);
-
-			    $('#addRecipeModalLabel').text("Edit Recipe");
-
-			    $('#addRecipeModal').modal('show');
-			};
+		const ingredients = recipe.ingredients.map(i => i.name).join(', ');
+		$('#recipeIngredients').val(ingredients);
+		$('#addRecipeModalLabel').text("Edit Recipe");
+		$('#addRecipeModal').modal('show');
+	};
 			
-			const updateRecipe = () => {
-
-			    const token = localStorage.getItem('token');
-
-			    const title = $('#recipeTitle').val().trim();
-			    const image = $('#recipeImage').val().trim();
-			    const instructions = $('#recipeInstructions').val().trim();
-			    const ingredientsInput = $('#recipeIngredients').val().trim();
-				const externalLink = $('#recipeExternalLink').val().trim();
-
-			    const ingredients = ingredientsInput
+	const updateRecipe = () => {
+		const token = localStorage.getItem('token');
+		
+		const title = $('#recipeTitle').val().trim();
+		const image = $('#recipeImage').val().trim();
+		const instructions = $('#recipeInstructions').val().trim();
+		const ingredientsInput = $('#recipeIngredients').val().trim();
+		const externalLink = $('#recipeExternalLink').val().trim();
+		const ingredients = ingredientsInput
 			        .split(',')
 			        .map(name => name.trim())
 			        .filter(name => name !== '')
 			        .map(name => ({ name }));
-
-			    const recipeData = {
+					
+	 	const recipeData = {
 			        id: currentRecipeId,
 			        title,
 			        image,
 			        instructions,
 					externalLink,
 			        ingredients
-			    };
+		};
 
-			    $.ajax({
-			        type: 'PUT',
+		$.ajax({
+			 		type: 'PUT',
 			        url: `${ROOT_URL}/${currentRecipeId}`,
 			        contentType: 'application/json',
 			        headers: {
 			            Authorization: `Bearer ${token}`
-			        },
+			    },
 			        data: JSON.stringify(recipeData),
 
 			        success: function () {
@@ -320,7 +339,7 @@
 			    });
 			};
 			
-			const findByIngredients = (ingredientsInput) => {
+		const findByIngredients = (ingredientsInput) => {
 			    const token = localStorage.getItem('token');
 
 			    $.ajax({
@@ -338,6 +357,44 @@
 			                message = xhr.responseJSON.errorMessage;
 			            }
 			            alert(message);
+			        }
+			    });
+			};
+			
+			const renderPopularityChart = () => {
+			    const ctx = document.getElementById('recipeChart');
+
+			    if (!ctx) {
+			        return;
+			    }
+
+			    if (recipeChart) {
+			        recipeChart.destroy();
+			    }
+
+			    recipeChart = new Chart(ctx, {
+			        type: 'bar',
+			        data: {
+			            labels: ['Tomato Pasta', 'Fried Egg', 'Chicken Salad', 'Garlic Bread', 'Cheese Omelette'],
+			            datasets: [{
+			                label: 'Popularity Score',
+			                data: [85, 92, 70, 65, 88],
+			                borderWidth: 1
+			            }]
+			        },
+			        options: {
+			            responsive: true,
+			            plugins: {
+			                legend: {
+			                    display: true
+			                }
+			            },
+			            scales: {
+			                y: {
+			                    beginAtZero: true,
+			                    max: 100
+			                }
+			            }
 			        }
 			    });
 			};
@@ -384,7 +441,7 @@
 				currentRecipeId = null;
 				currentRecipe = null;
 
-				$('#addRecipeForm')[0].reset();
+				document.getElementById('addRecipeForm').reset();
 				$('#addRecipeError').hide().text('');
 				$('#addRecipeModalLabel').text("Add New Recipe");
 				$('#addRecipeModal').modal('show');
@@ -442,7 +499,7 @@
 		        findByIngredients(ingredientsInput);
 		    });
 		}
-
+		renderPopularityChart();
 		initApp();
 	})
 	
