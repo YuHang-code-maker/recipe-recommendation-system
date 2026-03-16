@@ -20,12 +20,14 @@ pipeline {
 
     stage('Build, Test & Verify') {
       steps {
-        script {
-          if (params.RUN_IT) {
-            bat 'mvn -B clean verify -DskipITs=false -Dspring.profiles.active=test'
-          } else {
-            bat 'mvn -B clean verify -DskipITs=true -Dspring.profiles.active=test'
-          }
+		dir('RRS') {
+        	script {
+          		if (params.RUN_IT) {
+            		bat 'mvn -B clean verify -DskipITs=false -Dspring.profiles.active=test'
+          		} else {
+           		 bat 'mvn -B clean verify -DskipITs=true -Dspring.profiles.active=test'
+          		}		
+        	}
         }
       }
     }
