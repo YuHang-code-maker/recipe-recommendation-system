@@ -2,6 +2,7 @@ package com.tus.RRS.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,17 +36,12 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/",
-                    "/index.html",
-                    "/login.html",
-                    "/auth/**",
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/favicon.ico"
-                ).permitAll()
-                .anyRequest().authenticated()
+            	    .requestMatchers("/", "/index.html", "/login.html", "/auth/**", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+            	    .requestMatchers(HttpMethod.POST, "/api/recipes").hasRole("admin")
+            	    .requestMatchers(HttpMethod.PUT, "/api/recipes/**").hasRole("admin")
+            	    .requestMatchers(HttpMethod.DELETE, "/api/recipes/**").hasRole("admin")
+            	    .requestMatchers(HttpMethod.GET, "/api/recipes","/api/recipes/**").hasAnyRole("admin", "customer")
+            	    .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
