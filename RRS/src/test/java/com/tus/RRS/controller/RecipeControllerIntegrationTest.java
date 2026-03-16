@@ -149,7 +149,7 @@ class RecipeControllerIntegrationTest {
     }
 
     @Test
-    void createRecipeShouldReturn403ForCustomer() {
+    void createRecipeShouldReturn401ForCustomer() {
         String token = loginAndGetToken(CUSTOMER_USERNAME, CUSTOMER_PASSWORD);
 
         RecipeDto recipeDto = buildRecipeDto("Integration Test Recipe");
@@ -159,6 +159,18 @@ class RecipeControllerIntegrationTest {
         ResponseEntity<String> response = restTemplate.postForEntity(
                 recipeBaseUrl,
                 request,
+                String.class
+        );
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+    
+    @Test
+    void getAllRecipesShouldReturn401WhenNoToken() {
+        ResponseEntity<String> response = restTemplate.exchange(
+                recipeBaseUrl,
+                HttpMethod.GET,
+                null,
                 String.class
         );
 
