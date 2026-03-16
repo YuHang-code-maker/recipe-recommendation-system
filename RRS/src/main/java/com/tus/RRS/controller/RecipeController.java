@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class RecipeController {
 	private IRecipeService iRecipeService;
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ResponseDto> createRecipe(@Valid @RequestBody RecipeDto recipeDto){
 		iRecipeService.createRecipe(recipeDto);
 		return ResponseEntity.status(HttpStatus.CREATED)
@@ -50,6 +52,7 @@ public class RecipeController {
 	}
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ResponseDto> updateRecipeDetails(@PathVariable 
 			@Positive(message = "Id must be greater than 0")
 			Long id,@Valid @RequestBody RecipeDto recipeDto){
@@ -62,6 +65,7 @@ public class RecipeController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ResponseDto> deleteRecipeDetails(@PathVariable @Positive(message = "Id must be greater than 0") Long id){
 		boolean isDeleted = iRecipeService.deleteRecipe(id);
 		if(isDeleted) {

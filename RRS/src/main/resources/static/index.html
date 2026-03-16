@@ -6,7 +6,7 @@
     <title>Recipe Website</title>
 
     <link rel="stylesheet" href="css/bootstrapV4.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -90,11 +90,18 @@
         				<li class="nav-item">
             				<a class="nav-link" href="#recipeSection">Recipes</a>
         				</li>
+        				<li class="nav-item">
+            				<a class="nav-link" href="#chartSection">Recipe Popularity Chart</a>
+        				</li>
         				<li class="nav-item admin-only">
-            				<a class="nav-link pointer" id="addBtn">Add Recipe</a>
+            				<a class="nav-link pointer" id="addBtn">
+            					<i class="fa fa-plus"></i> Add Recipe
+            				</a>
         				</li>
         				<li class="nav-item">
-            				<a class="nav-link pointer" id="logoutBtn">Logout</a>
+            				<a class="nav-link pointer" id="logoutBtn">
+            					<i class="fa fa-sign-out"></i> Logout
+            				</a>
         				</li>
     				</ul>
 				</div>
@@ -119,8 +126,9 @@
                						placeholder="Enter recipe title...">
     						</div>
     						<div class="col-md-3">
-        						<button id="searchBtn"
-               						 class="btn btn-dark btn-lg btn-block">Search</button>
+        						<button id="searchBtn" class="btn btn-dark btn-lg btn-block">
+               						 	<i class="fa fa-search"></i> Search
+               					</button>
     						</div>
 						</div>
 
@@ -131,8 +139,9 @@
                						placeholder="Enter ingredients name...">
     						</div>
     					<div class="col-md-3">
-        					<button id="searchBtnIngredient"
-                				class="btn btn-dark btn-lg btn-block">Search</button>
+        					<button id="searchBtnIngredient" class="btn btn-dark btn-lg btn-block">
+        						<i class="fa fa-search"></i> Search
+        					</button>
     					</div>
 						</div>
                         </div>
@@ -193,9 +202,15 @@
                 </div>
 
                 <div class="modal-footer">
-                	<button class="btn btn-secondary admin-only"  id="editBtn">Edit</button>
-                	<button class="btn btn-secondary admin-only"  id="deleteBtn">Delete</button>
-                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                	<button class="btn btn-secondary admin-only"  id="editBtn">
+                		<i class="fa fa-pencil"></i> Edit
+                	</button>
+                	<button class="btn btn-secondary admin-only"  id="deleteBtn">
+                		<i class="fa fa-trash"></i> Delete
+                	</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">
+                    	<i class="fa fa-times"></i> Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -255,6 +270,19 @@
     </div>
 </div>
 
+<!-- Chart -->
+<section id="chartSection" class="py-5 bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-4">
+            <h2>Recipe Popularity Chart</h2>
+            <p class="text-muted">Sample popularity scores for featured recipes</p>
+        </div>
+        <div class="bg-white p-4 shadow-sm rounded">
+            <canvas id="recipeChart"></canvas>
+        </div>
+    </div>
+</section>
+
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
@@ -265,6 +293,7 @@
     </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrapV4.js"></script>
