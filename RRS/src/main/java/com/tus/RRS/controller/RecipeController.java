@@ -2,7 +2,6 @@ package com.tus.RRS.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tus.RRS.constants.RecipeConstants;
 import com.tus.RRS.dto.RecipeDto;
 import com.tus.RRS.dto.ResponseDto;
-import com.tus.RRS.entity.RecipeEntity;
 import com.tus.RRS.service.IRecipeService;
 
 import jakarta.validation.Valid;
@@ -32,8 +30,11 @@ import jakarta.validation.constraints.Positive;
 @RequestMapping(path="/api/recipes", produces=MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class RecipeController {
-	@Autowired
-	private IRecipeService iRecipeService;
+	private final IRecipeService iRecipeService;
+
+    public RecipeController(IRecipeService iRecipeService) {
+        this.iRecipeService = iRecipeService;
+    }
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
