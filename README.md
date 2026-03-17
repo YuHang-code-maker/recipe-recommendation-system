@@ -146,6 +146,14 @@ The project includes:
 
 ---
 
+## API Documentation
+
+A Postman collection documenting the REST API endpoints is included in this repository:
+
+/postman/recipe-api.postman_collection.json
+
+---
+
 ## Author
 
 Yu Hang  
