@@ -70,7 +70,7 @@ public class RecipeController {
 	public ResponseEntity<ResponseDto> deleteRecipeDetails(@PathVariable @Positive(message = "Id must be greater than 0") Long id){
 		boolean isDeleted = iRecipeService.deleteRecipe(id);
 		if(isDeleted) {
-			return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(RecipeConstants.STATUS_200,RecipeConstants.MESSAGE_200));
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(RecipeConstants.STATUS_200,"Recipe deleted successfully"));
 		}else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(RecipeConstants.STATUS_500,RecipeConstants.MESSAGE_500));
 		}

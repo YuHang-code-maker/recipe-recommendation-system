@@ -1,0 +1,307 @@
+{
+  "info": {
+    "_postman_id": "7e7b5722-2f14-4d6b-9f38-cd8dc54b7819",
+    "name": "Recipe API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50794511",
+    "_collection_link": "https://go.postman.co/collection/50794511-7e7b5722-2f14-4d6b-9f38-cd8dc54b7819?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8085/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Recipes",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Recipe By ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search By Title",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes/search?title=chicken",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "chicken"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search By Ingredients",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8085/api/recipes/searchByIngredients?ingredients=egg,salt",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes",
+            "searchByIngredients"
+          ],
+          "query": [
+            {
+              "key": "ingredients",
+              "value": "egg,salt"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Recipe",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Chicken Soup\",\r\n  \"instructions\": \"Boil chicken with vegetables for 30 minutes\",\r\n  \"image\": \"chicken_soup.jpg\",\r\n  \"externalLink\": \"https://youtube.com/example\",\r\n  \"ingredients\": [\r\n    { \"name\": \"chicken\" },\r\n    { \"name\": \"carrot\" },\r\n    { \"name\": \"salt\" }\r\n  ]\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Recipe",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Chicken Soup\",\r\n  \"instructions\": \"Boil chicken with vegetables for 30 minutes\",\r\n  \"image\": \"chicken_soup.jpg\",\r\n  \"externalLink\": \"https://youtube.com/example\",\r\n  \"ingredients\": [\r\n    { \"name\": \"chicken\" },\r\n    { \"name\": \"carrot\" },\r\n    { \"name\": \"salt\" }\r\n  ]\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update recipe",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3Mzc4MDgzNiwiZXhwIjoxNzczNzg0NDM2fQ.w7lEWDmYQXkCftWlUYebmNATvW2ehdquoKfn2U46KLc",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Chicken Soup\",\r\n  \"instructions\": \"Boil chicken with vegetables for 40 minutes\",\r\n  \"image\": \"chicken_soup.jpg\",\r\n  \"externalLink\": \"https://youtube.com/example\",\r\n  \"ingredients\": [\r\n    { \"name\": \"chicken\" },\r\n    { \"name\": \"carrot\" },\r\n    { \"name\": \"pepper\" }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8085/api/recipes/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "api",
+            "recipes",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
