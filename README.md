@@ -121,7 +121,7 @@ If the token expires or the user logs out, the application redirects back to the
 |------|------|------|
 | GET | /api/recipes | Get all recipes |
 | GET | /api/recipes/{id} | Get recipe by ID |
-| GET | /api/recipes/searchByTitle | Search recipes by title |
+| GET | /api/recipes/search | Search recipes by title |
 | GET | /api/recipes/searchByIngredients | Search recipes by ingredients |
 | POST | /api/recipes | Create recipe (Admin only) |
 | PUT | /api/recipes/{id} | Update recipe (Admin only) |
