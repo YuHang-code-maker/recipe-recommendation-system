@@ -10,6 +10,7 @@ class RecipeKarateRunnerTest {
     @Karate.Test
     Karate runAll() {
         return Karate.run("classpath:features/recipe-admin.feature",
-                          "classpath:features/recipe-customer-forbidden.feature");
+                          "classpath:features/recipe-customer-forbidden.feature",
+        					"classpath:features/recipe-get.feature");
     }
 }
