@@ -26,7 +26,6 @@ class RecipeSeleniumTest {
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get("http://localhost:8085");
     }
@@ -85,5 +84,19 @@ class RecipeSeleniumTest {
         assertFalse(anyVisible(By.id("addBtn")), "Customer should not see add button");
         assertFalse(anyVisible(By.className("editButton")), "Customer should not see edit buttons");
         assertFalse(anyVisible(By.className("deleteButton")), "Customer should not see delete buttons");
+    }
+    
+    @Test
+    void adminLogoutShouldNotShowAppView() {
+    	login("admin", "admin");
+        waitForAppView();
+
+        WebElement appView = driver.findElement(By.id("appView"));
+        assertTrue(appView.isDisplayed());
+        WebElement logoutButton = driver.findElement(By.id("logoutBtn"));
+        logoutButton.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginView")));
+        assertFalse(anyVisible(By.id("appView")), "Admin should not see app view after logout");
+        assertTrue(anyVisible(By.id("loginView")), "Login view should be visible after logout");
     }
 }
