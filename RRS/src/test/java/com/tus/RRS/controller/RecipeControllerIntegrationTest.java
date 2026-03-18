@@ -3,6 +3,7 @@ package com.tus.RRS.controller;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -97,19 +98,35 @@ class RecipeControllerIntegrationTest {
 
     @Test
     void getAllRecipesShouldReturn200ForAuthenticatedUser() {
-        String token = loginAndGetToken(ADMIN_USERNAME, ADMIN_PASSWORD);
+    	String token = loginAndGetToken(ADMIN_USERNAME, ADMIN_PASSWORD);
 
-        HttpEntity<Void> request = new HttpEntity<>(getAuthHeaders(token));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
 
-        ResponseEntity<List<RecipeDto>> response = restTemplate.exchange(
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        ResponseEntity<List> response = restTemplate.exchange(
                 recipeBaseUrl,
                 HttpMethod.GET,
                 request,
-                new ParameterizedTypeReference<List<RecipeDto>>() {}
+                List.class
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertFalse(response.getBody().isEmpty());
+
+
+        List<LinkedHashMap<String, Object>> list = response.getBody();
+
+        LinkedHashMap<String, Object> firstRecipe = list.get(0);
+
+
+        String title = (String) firstRecipe.get("title");
+        String image = (String) firstRecipe.get("image");
+
+        assertNotNull(title);
+        assertNotNull(image);
         assertFalse(response.getBody().isEmpty());
     }
 
