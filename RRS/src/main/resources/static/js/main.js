@@ -418,6 +418,7 @@
 		 if ($('#showAllBtn').length) {
 		         $('#showAllBtn').on('click', () => {
 		             $('#searchInput').val('');
+					 $('#searchInputIngredient').val('');
 		             findAll();
 		     });
 		 }
