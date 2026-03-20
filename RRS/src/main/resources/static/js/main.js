@@ -180,7 +180,8 @@
 
 		$('#recipeModal').modal('hide');
 		$('#addRecipeModal').modal('hide');
-
+		$('#chartSection').empty();
+		$('#chartSection').hide();
 		showLoginView();
 	};
 	
