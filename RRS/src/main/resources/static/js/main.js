@@ -191,12 +191,16 @@
 	    const image = $('#recipeImage').val().trim();
 	    const instructions = $('#recipeInstructions').val().trim();
 	    const ingredientsInput = $('#recipeIngredients').val().trim();
-		const externalLink = $('#recipeExternalLink').val().trim();
+		let externalLink = $('#recipeExternalLink').val().trim();
 
 	    if (!title || !image || !instructions || !ingredientsInput) {
 	        $('#addRecipeError').text('All fields are required.').show();
 	        return;
 	    }
+		
+		if (externalLink && !externalLink.startsWith('http://') && !externalLink.startsWith('https://')) {
+		    externalLink = 'https://' + externalLink;
+		}
 
 	    const ingredients = ingredientsInput
 	        .split(',')
